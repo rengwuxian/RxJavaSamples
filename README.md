@@ -31,3 +31,6 @@ RxJava 和 Retrofit 结合使用的几个最常见使用方式举例。
 
   使用 BehaviorSubject 缓存数据。
   ![screenshot_6](./images/screenshot_6.png)
+
+### apk 下载
+[RxJavaSamples.apk](./apk/RxJavaSamples.apk?raw=true)
