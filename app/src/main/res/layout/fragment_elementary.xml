@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/searchRb1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可爱" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/searchRb2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="110" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/searchRb3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在下" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/searchRb4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="装逼" />
+
+        </RadioGroup>
+
+        <include layout="@layout/tip_bt" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gridRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

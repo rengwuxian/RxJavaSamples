@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="end"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:orientation="vertical">
+
+    <include layout="@layout/tip_bt" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextView
+            android:id="@+id/tokenTv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#11333333"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <Button
+        android:id="@+id/requestBt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/request_data"/>
+
+</LinearLayout>

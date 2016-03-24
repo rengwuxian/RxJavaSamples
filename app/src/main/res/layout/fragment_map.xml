@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/pageTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/previousPageBt"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/previous_page" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/nextPageBt"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/next_page"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <include layout="@layout/tip_bt" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gridRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

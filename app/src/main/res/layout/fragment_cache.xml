@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/loadingTimeTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/loadBt"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/load" />
+
+        <include layout="@layout/tip_bt" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cacheRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:gravity="end">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/clearMemoryCacheBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clearMemoryCache" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/clearMemoryAndDiskCacheBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clearMemoryAndDiskCache" />
+
+    </LinearLayout>
+
+</LinearLayout>
