@@ -5,13 +5,13 @@ package com.rengwuxian.rxjavasamples.network;
 import com.rengwuxian.rxjavasamples.network.api.FakeApi;
 import com.rengwuxian.rxjavasamples.network.api.GankApi;
 import com.rengwuxian.rxjavasamples.network.api.ZhuangbiApi;
-import com.squareup.okhttp.OkHttpClient;
 
-import retrofit.CallAdapter;
-import retrofit.Converter;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import okhttp3.OkHttpClient;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
     private static ZhuangbiApi zhuangbiApi;
