@@ -73,7 +73,7 @@ public class TokenAdvancedFragment extends BaseFragment {
                                                 }
                                             });
                                 }
-                                return Observable.just(throwable);
+                                return Observable.error(throwable);
                             }
                         });
                     }
