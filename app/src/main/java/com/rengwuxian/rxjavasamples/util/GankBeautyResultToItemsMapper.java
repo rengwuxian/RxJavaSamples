@@ -17,7 +17,7 @@ import rx.functions.Func1;
 public class GankBeautyResultToItemsMapper implements Func1<GankBeautyResult, List<Item>> {
     private static GankBeautyResultToItemsMapper INSTANCE = new GankBeautyResultToItemsMapper();
 
-    public GankBeautyResultToItemsMapper() {
+    private GankBeautyResultToItemsMapper() {
     }
 
     public static GankBeautyResultToItemsMapper getInstance() {

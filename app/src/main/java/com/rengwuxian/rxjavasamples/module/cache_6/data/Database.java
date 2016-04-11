@@ -24,6 +24,9 @@ public class Database {
     File dataFile = new File(App.getInstance().getFilesDir(), DATA_FILE_NAME);
     Gson gson = new Gson();
 
+    private Database() {
+    }
+
     public static Database getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Database();
