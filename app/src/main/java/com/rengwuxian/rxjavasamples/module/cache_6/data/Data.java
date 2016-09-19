@@ -85,6 +85,7 @@ public class Data {
                     @Override
                     public void call(Throwable throwable) {
                         throwable.printStackTrace();
+	                    cache.onError(throwable);
                     }
                 });
     }
@@ -110,7 +111,14 @@ public class Data {
         } else {
             setDataSource(DATA_SOURCE_MEMORY);
         }
-        return cache.observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+        return cache
+		        .doOnError(new Action1<Throwable>() {
+			        @Override
+			        public void call(Throwable throwable) {
+						cache = null;
+			        }
+		        })
+		        .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 
     public void clearMemoryCache() {
