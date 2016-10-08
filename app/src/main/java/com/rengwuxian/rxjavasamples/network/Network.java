@@ -25,7 +25,7 @@ public class Network {
         if (zhuangbiApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
-                    .baseUrl("http://zhuangbi.info/")
+                    .baseUrl("http://www.zhuangbi.info/")
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
