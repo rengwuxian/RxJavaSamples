@@ -22,15 +22,15 @@ import com.rengwuxian.rxjavasamples.module.cache_6.data.Data;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
 
 public class CacheFragment extends BaseFragment {
-    @Bind(R.id.loadingTimeTv) TextView loadingTimeTv;
-    @Bind(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.cacheRv) RecyclerView cacheRv;
+    @BindView(R.id.loadingTimeTv) TextView loadingTimeTv;
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.cacheRv) RecyclerView cacheRv;
     ItemListAdapter adapter = new ItemListAdapter();
     private long startingTime;
 

@@ -22,7 +22,7 @@ import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import rx.Observer;
@@ -30,8 +30,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ElementaryFragment extends BaseFragment {
-    @Bind(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.gridRv) RecyclerView gridRv;
+    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.gridRv) RecyclerView gridRv;
 
     ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
     Observer<List<ZhuangbiImage>> observer = new Observer<List<ZhuangbiImage>>() {

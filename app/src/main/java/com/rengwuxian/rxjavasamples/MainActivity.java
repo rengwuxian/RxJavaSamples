@@ -15,13 +15,13 @@ import com.rengwuxian.rxjavasamples.module.zip_3.ZipFragment;
 import com.rengwuxian.rxjavasamples.module.elementary_1.ElementaryFragment;
 import com.rengwuxian.rxjavasamples.module.map_2.MapFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @Bind(android.R.id.tabs) TabLayout tabLayout;
-    @Bind(R.id.viewPager) ViewPager viewPager;
-    @Bind(R.id.toolBar) Toolbar toolBar;
+    @BindView(android.R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.viewPager) ViewPager viewPager;
+    @BindView(R.id.toolBar) Toolbar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
