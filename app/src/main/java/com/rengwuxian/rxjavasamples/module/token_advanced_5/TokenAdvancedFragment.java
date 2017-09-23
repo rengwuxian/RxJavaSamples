@@ -22,11 +22,11 @@ import com.rengwuxian.rxjavasamples.model.FakeToken;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class TokenAdvancedFragment extends BaseFragment {
 
@@ -47,26 +47,26 @@ public class TokenAdvancedFragment extends BaseFragment {
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
         final FakeApi fakeApi = Network.getFakeApi();
-        subscription = Observable.just(null)
-                .flatMap(new Func1<Object, Observable<FakeThing>>() {
+        disposable = Observable.just(1)
+                .flatMap(new Function<Object, Observable<FakeThing>>() {
                     @Override
-                    public Observable<FakeThing> call(Object o) {
+                    public Observable<FakeThing> apply(Object o) {
                         return cachedFakeToken.token == null
                                 ? Observable.<FakeThing>error(new NullPointerException("Token is null!"))
                                 : fakeApi.getFakeData(cachedFakeToken);
                     }
                 })
-                .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+                .retryWhen(new Function<Observable<? extends Throwable>, Observable<?>>() {
                     @Override
-                    public Observable<?> call(Observable<? extends Throwable> observable) {
-                        return observable.flatMap(new Func1<Throwable, Observable<?>>() {
+                    public Observable<?> apply(Observable<? extends Throwable> observable) {
+                        return observable.flatMap(new Function<Throwable, Observable<?>>() {
                             @Override
-                            public Observable<?> call(Throwable throwable) {
+                            public Observable<?> apply(Throwable throwable) {
                                 if (throwable instanceof IllegalArgumentException || throwable instanceof NullPointerException) {
                                     return fakeApi.getFakeToken("fake_auth_code")
-                                            .doOnNext(new Action1<FakeToken>() {
+                                            .doOnNext(new Consumer<FakeToken>() {
                                                 @Override
-                                                public void call(FakeToken fakeToken) {
+                                                public void accept(FakeToken fakeToken) {
                                                     tokenUpdated = true;
                                                     cachedFakeToken.token = fakeToken.token;
                                                     cachedFakeToken.expired = fakeToken.expired;
@@ -80,9 +80,9 @@ public class TokenAdvancedFragment extends BaseFragment {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<FakeThing>() {
+                .subscribe(new Consumer<FakeThing>() {
                     @Override
-                    public void call(FakeThing fakeData) {
+                    public void accept(FakeThing fakeData) {
                         swipeRefreshLayout.setRefreshing(false);
                         String token = cachedFakeToken.token;
                         if (tokenUpdated) {
@@ -90,9 +90,9 @@ public class TokenAdvancedFragment extends BaseFragment {
                         }
                         tokenTv.setText(getString(R.string.got_token_and_data, token, fakeData.id, fakeData.name));
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         swipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
                     }

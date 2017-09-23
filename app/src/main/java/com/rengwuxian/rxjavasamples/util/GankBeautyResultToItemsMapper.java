@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import rx.functions.Func1;
+import io.reactivex.functions.Function;
 
-public class GankBeautyResultToItemsMapper implements Func1<GankBeautyResult, List<Item>> {
+public class GankBeautyResultToItemsMapper implements Function<GankBeautyResult, List<Item>> {
     private static GankBeautyResultToItemsMapper INSTANCE = new GankBeautyResultToItemsMapper();
 
     private GankBeautyResultToItemsMapper() {
@@ -25,7 +25,7 @@ public class GankBeautyResultToItemsMapper implements Func1<GankBeautyResult, Li
     }
 
     @Override
-    public List<Item> call(GankBeautyResult gankBeautyResult) {
+    public List<Item> apply(GankBeautyResult gankBeautyResult) {
         List<GankBeauty> gankBeauties = gankBeautyResult.beauties;
         List<Item> items = new ArrayList<>(gankBeauties.size());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS'Z'");

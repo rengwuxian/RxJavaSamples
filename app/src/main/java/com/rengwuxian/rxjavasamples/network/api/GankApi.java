@@ -6,7 +6,7 @@ import com.rengwuxian.rxjavasamples.model.GankBeautyResult;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface GankApi {
     @GET("data/福利/{number}/{page}")

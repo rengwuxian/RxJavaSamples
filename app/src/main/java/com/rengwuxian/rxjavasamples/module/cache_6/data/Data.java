@@ -13,21 +13,26 @@ import com.rengwuxian.rxjavasamples.util.GankBeautyResultToItemsMapper;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DefaultObserver;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class Data {
     private static Data instance;
     private static final int DATA_SOURCE_MEMORY = 1;
     private static final int DATA_SOURCE_DISK = 2;
     private static final int DATA_SOURCE_NETWORK = 3;
-    @IntDef({DATA_SOURCE_MEMORY, DATA_SOURCE_DISK, DATA_SOURCE_NETWORK}) @interface DataSource {}
+
+    @IntDef({DATA_SOURCE_MEMORY, DATA_SOURCE_DISK, DATA_SOURCE_NETWORK})
+    @interface DataSource {
+    }
 
     BehaviorSubject<List<Item>> cache;
 
@@ -70,39 +75,39 @@ public class Data {
                 .getBeauties(100, 1)
                 .subscribeOn(Schedulers.io())
                 .map(GankBeautyResultToItemsMapper.getInstance())
-                .doOnNext(new Action1<List<Item>>() {
+                .doOnNext(new Consumer<List<Item>>() {
                     @Override
-                    public void call(List<Item> items) {
+                    public void accept(List<Item> items) {
                         Database.getInstance().writeItems(items);
                     }
                 })
-                .subscribe(new Action1<List<Item>>() {
+                .subscribe(new Consumer<List<Item>>() {
                     @Override
-                    public void call(List<Item> items) {
+                    public void accept(List<Item> items) {
                         cache.onNext(items);
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         throwable.printStackTrace();
-	                    cache.onError(throwable);
+                        cache.onError(throwable);
                     }
                 });
     }
 
-    public Subscription subscribeData(@NonNull Observer<List<Item>> observer) {
+    public Disposable subscribeData(@NonNull Consumer<List<Item>> onNext, @NonNull Consumer<Throwable> onError) {
         if (cache == null) {
             cache = BehaviorSubject.create();
-            Observable.create(new Observable.OnSubscribe<List<Item>>() {
+            Observable.create(new ObservableOnSubscribe<List<Item>>() {
                 @Override
-                public void call(Subscriber<? super List<Item>> subscriber) {
+                public void subscribe(ObservableEmitter<List<Item>> e) throws Exception {
                     List<Item> items = Database.getInstance().readItems();
                     if (items == null) {
                         setDataSource(DATA_SOURCE_NETWORK);
                         loadFromNetwork();
                     } else {
                         setDataSource(DATA_SOURCE_DISK);
-                        subscriber.onNext(items);
+                        e.onNext(items);
                     }
                 }
             })
@@ -111,14 +116,14 @@ public class Data {
         } else {
             setDataSource(DATA_SOURCE_MEMORY);
         }
-        return cache
-		        .doOnError(new Action1<Throwable>() {
-			        @Override
-			        public void call(Throwable throwable) {
-						cache = null;
-			        }
-		        })
-		        .observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+        return cache.doOnError(new Consumer<Throwable>() {
+            @Override
+            public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                cache = null;
+            }
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onNext, onError);
     }
 
     public void clearMemoryCache() {

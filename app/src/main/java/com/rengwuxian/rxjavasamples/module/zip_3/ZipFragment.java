@@ -27,44 +27,28 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class ZipFragment extends BaseFragment {
     @BindView(R.id.gridRv) RecyclerView gridRv;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
     ItemListAdapter adapter = new ItemListAdapter();
 
-    Observer<List<Item>> observer = new Observer<List<Item>>() {
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onNext(List<Item> items) {
-            swipeRefreshLayout.setRefreshing(false);
-            adapter.setItems(items);
-        }
-    };
-
     @OnClick(R.id.zipLoadBt)
     void load() {
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
-        subscription = Observable.zip(Network.getGankApi().getBeauties(200, 1).map(GankBeautyResultToItemsMapper.getInstance()),
+        disposable = Observable.zip(Network.getGankApi().getBeauties(200, 1).map(GankBeautyResultToItemsMapper.getInstance()),
                 Network.getZhuangbiApi().search("装逼"),
-                new Func2<List<Item>, List<ZhuangbiImage>, List<Item>>() {
+                new BiFunction<List<Item>, List<ZhuangbiImage>, List<Item>>() {
                     @Override
-                    public List<Item> call(List<Item> gankItems, List<ZhuangbiImage> zhuangbiImages) {
+                    public List<Item> apply(List<Item> gankItems, List<ZhuangbiImage> zhuangbiImages) {
                         List<Item> items = new ArrayList<Item>();
                         for (int i = 0; i < gankItems.size() / 2 && i < zhuangbiImages.size(); i++) {
                             items.add(gankItems.get(i * 2));
@@ -80,7 +64,19 @@ public class ZipFragment extends BaseFragment {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(new Consumer<List<Item>>() {
+                    @Override
+                    public void accept(@NonNull List<Item> items) throws Exception {
+                        swipeRefreshLayout.setRefreshing(false);
+                        adapter.setItems(items);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Nullable

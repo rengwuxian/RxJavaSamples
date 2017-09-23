@@ -6,10 +6,10 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 
 import butterknife.OnClick;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseFragment extends Fragment {
-    protected Subscription subscription;
+    protected Disposable disposable;
 
     @OnClick(R.id.tipBt)
     void tip() {
@@ -26,8 +26,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void unsubscribe() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
         }
     }
 
