@@ -1,6 +1,11 @@
-RxSamples
+样例代码已正式切换到基于 RxJava 2
 ================
-RxJava 和 Retrofit 结合使用的几个最常见使用方式举例。
+
+> 需要旧版 RxJava 1 代码的点[这里](https://github.com/rengwuxian/RxJavaSamples/tree/1.x)
+
+### 项目介绍
+
+RxJava 2 和 Retrofit 结合使用的几个最常见使用方式举例。
 
 1. **基本使用**
 
