@@ -38,4 +38,4 @@ RxJava 2 和 Retrofit 结合使用的几个最常见使用方式举例。
   ![screenshot_6](./images/screenshot_6.png)
 
 ### apk 下载
-[RxJavaSamples_1.01.apk](https://github.com/rengwuxian/RxJavaSamples/releases/download/1.01/RxJavaSamples_1.01.apk)
+[RxJavaSamples_2.0.apk](https://github.com/rengwuxian/RxJavaSamples/releases/download/2.0/RxJavaSamples_2.0.apk)
