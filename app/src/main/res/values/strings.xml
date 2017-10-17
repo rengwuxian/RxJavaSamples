@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RxJava 2 Samsples</string>
+    <string name="app_name">RxJava 2 Samples</string>
     <string name="throttle_first">点击按钮打开新 Activity 是一种常见的实现，但由于 Activity 的异步机制，如果用户不小心连击了按钮，有可能导致 App 连续打开同一个 Activity，不仅给用户带来使用的不便，还让用户觉得『这个软件做得好傻逼耶』。通过 throttleFirst() 方法加入防抖动延时，可以避免这种情况。试试下面两个按钮吧！</string>
     <string name="bt_throttle_first_without">常规实现</string>
     <string name="bt_throttle_first_with">使用 throttleFirst() 去抖动后</string>
